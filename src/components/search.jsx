@@ -3,14 +3,15 @@ import './home.css';
 import './search.css';
 import { useDispatch, useSelector } from "react-redux";
 import { setCount } from '../reducers/reposReducer';
-import { productdata } from '../assets/projects';
+import { productdata, filters } from '../assets/data';
 
 const Search = () => {
   const [isActive, setActive] = useState(false);
   const [didReach, setReach] = useState(true);
   const [filteredProducts, setProducts] = useState(productdata);
+  const [filterCategories, setCategories] = useState([]);
   const filterComponent = useRef()
-  const failMessage = useRef() 
+  const failMessage = useRef()
   const dispatch = useDispatch()
   const count = useSelector(state => state.repos.count)
 
@@ -33,30 +34,48 @@ const Search = () => {
   const handleFilter = (e) => {
     let items = JSON.parse(JSON.stringify(filteredProducts));
     const filterType = e.target.innerHTML;
-    console.log(filterType)
-    switch (filterType){
-      case "All": items = productdata;
-      break;
-      case "Phones and Gadgets": items = productdata.filter((it)=>it.categories[0] === "phone");
-      break;
-      case "Computers": items = productdata.filter((it)=>it.categories[0] === "computer");
-      break;
-      case "Audio": items = productdata.filter((it)=>it.categories[0] === "audio");
-      break;
-      case "Television": items = productdata.filter((it)=>it.categories[0] === "television");
-      break;
-      case "Cameras": items = productdata.filter((it)=>it.categories[0] === "camera");
-      break;
+    switch (filterType) {
+      case "Все разделы": items = productdata;
+        break;
+      case "Телефоны и гаджеты": items = productdata.filter((it) => it.categories[0] === "Телефоны и гаджеты");
+        break;
+      case "Компьютеры": items = productdata.filter((it) => it.categories[0] === "Компьютеры");
+        break;
+      case "Фото": items = productdata.filter((it) => it.categories[0] === "Фото");
+        break;
+      case "Телевизоры": items = productdata.filter((it) => it.categories[0] === "Телевизоры");
+        break;
+      case "Аудио": items = productdata.filter((it) => it.categories[0] === "Аудио");
+        break;
+      case "Бытовая техника": items = productdata.filter((it) => it.categories[0] === "Бытовая техника");
+        break;
+      case "Климат": items = productdata.filter((it) => it.categories[0] === "Климат");
+        break;
+      case "Дом": items = productdata.filter((it) => it.categories[0] === "Дом");
+        break;
+      case "Детские товары": items = productdata.filter((it) => it.categories[0] === "Детские товары");
+        break;
+      case "Авто": items = productdata.filter((it) => it.categories[0] === "Авто");
+        break;
+      case "Инструмент": items = productdata.filter((it) => it.categories[0] === "Инструмент");
+        break;
+      case "Туризм": items = productdata.filter((it) => it.categories[0] === "Туризм");
+        break;
+      case "Спорт": items = productdata.filter((it) => it.categories[0] === "Спорт");
+        break;
+      case "Часы и украшения": items = productdata.filter((it) => it.categories[0] === "Часы и украшения");
+        break;
       default: items = items;
     }
 
-    if(items.length==0){
+    if (items.length == 0) {
       failMessage.current.style.display = "block";
-    }else{
+    } else {
       failMessage.current.style.display = "none";
     }
 
     setProducts(items)
+    setCategories(filters[filterType])
   }
 
   // Filter toggler handler function
@@ -70,32 +89,35 @@ const Search = () => {
         <div className='filter-burger' onClick={(e) => toggle(e)}></div>
         <div className='filter-button' onClick={(e) => toggle(e)}>Filter</div>
         <ul className='filter-types'>
-          <li onClick={(e)=>handleFilter(e)}>All</li>
-          <li onClick={(e)=>handleFilter(e)}>Phones and Gadgets</li>
-          <li onClick={(e)=>handleFilter(e)}>Computers</li>
-          <li onClick={(e)=>handleFilter(e)}>Audio</li>
-          <li onClick={(e)=>handleFilter(e)}>Television</li>
-          <li onClick={(e)=>handleFilter(e)}>Cameras</li>
+          {Object.keys(filters)?.map((item, key) => {
+            return (
+              <li key={key} onClick={(e) => handleFilter(e)}>{item}</li>
+            )
+          })}
         </ul>
       </div>
       <div className={`filter ${isActive ? "is-active" : ""} ${didReach ? "is-fixed" : ""}`}>
         <form>
           <div className="filter-block">
-            <h4>Check boxes</h4>
+            <h4>Категорий</h4>
             <ul className="filter-content">
-              <li>
-                <input className="filter-check" type="checkbox" id="checkbox1" />
-                <label className="checkbox-label" htmlFor="checkbox1">Option 1</label>
-              </li>
-              <li>
-                <input className="filter-check" type="checkbox" id="checkbox2" />
-                <label className="checkbox-label" htmlFor="checkbox2">Option 2</label>
-              </li>
-              <li>
-                <input className="filter-check" type="checkbox" id="checkbox3" />
-                <label className="checkbox-label" htmlFor="checkbox3">Option 3</label>
-              </li>
+              {filterCategories?.map((item, key) => {
+                return (
+                  <li key={key}>
+                    <input className="filter-check" type="checkbox" id={`checkbox${key}`} />
+                    <label className="checkbox-label" htmlFor={`checkbox${key}`}>{item}</label>
+                  </li>
+                )
+              })}
             </ul>
+          </div>
+          <div className="filter-block">
+            <h4>Цена</h4>
+            <label className="checkbox-label" htmlFor="pricefrom">От</label>
+            <input className="filter-textbox" type="number" id="pricefrom" />
+            <br/>
+            <label className="checkbox-label" htmlFor="priceto">До</label>
+            <input className="filter-textbox" type="number" id="priceto" />
           </div>
         </form>
       </div>
@@ -110,7 +132,7 @@ const Search = () => {
                 Price: {item.price}$
               </li>
             )
-          }): ""}
+          }) : ""}
         </ul>
         <div ref={failMessage} className="kanban-fail-message">No results found</div>
       </div>
