@@ -4,11 +4,10 @@
 /* Styling of Filter toggler */
 
 .filter-bar{
-  /* position: fixed; */
-  background-color: bisque;
+  background-color: #fff;
   width: 98vw;
   z-index: 13;
-  padding: 10px 20px;
+  padding: 20px 20px;
   display: grid;
   grid-template-columns: 1fr 2fr 85vw;
 }
@@ -45,11 +44,10 @@
 /* Animated filter panel */
 
 .filter{
-  /* position: fixed; */
   width: 30vw;
   max-width: 280px;
   height: 100vh;
-  background-color: aqua;
+  background-color: #fff;
   padding: 20px 20px 10px;
   margin-top: 30px;
   box-shadow:5px 0px 20px black;
@@ -60,7 +58,7 @@
 
 
 .filter.is-active{
-  transform: translateX(0);
+  transform: translateX(-5%);
 }
 
 .filter.is-fixed{
