@@ -8,21 +8,52 @@ import { productdata } from '../assets/projects';
 const Search = () => {
   const [isActive, setActive] = useState(false);
   const [didReach, setReach] = useState(true);
+  const [filteredProducts, setProducts] = useState(productdata);
   const filterComponent = useRef()
+  const failMessage = useRef() 
   const dispatch = useDispatch()
   const count = useSelector(state => state.repos.count)
 
- 
+
 
   const handleScroll = (e) => {
     console.log(e.target.clientHeight);
     const bottom = e.target.scrollHeight - e.target.scrollTop <= e.target.clientHeight;
-    if(bottom){
+    if (bottom) {
       console.log("did reach")
       setReach(true);
-    }else{
+    } else {
       setReach(false);
     }
+  }
+
+  const handleFilter = (e) => {
+    let items = JSON.parse(JSON.stringify(filteredProducts));
+    const filterType = e.target.innerHTML;
+    console.log(filterType)
+    switch (filterType){
+      case "All": items = productdata;
+      break;
+      case "Phones and Gadgets": items = productdata.filter((it)=>it.categories[0] === "phone");
+      break;
+      case "Computers": items = productdata.filter((it)=>it.categories[0] === "computer");
+      break;
+      case "Audio": items = productdata.filter((it)=>it.categories[0] === "audio");
+      break;
+      case "Television": items = productdata.filter((it)=>it.categories[0] === "television");
+      break;
+      case "Cameras": items = productdata.filter((it)=>it.categories[0] === "camera");
+      break;
+      default: items = items;
+    }
+
+    if(items.length==0){
+      failMessage.current.style.display = "block";
+    }else{
+      failMessage.current.style.display = "none";
+    }
+
+    setProducts(items)
   }
 
   // Filter toggler handler function
@@ -32,19 +63,19 @@ const Search = () => {
 
   return (
     <div className='filter-section'>
-      <div className={`filter-bar ${didReach ? "is-fixed":""}`} ref={filterComponent} onScroll={(e)=>handleScroll(e)}>
-        <div className='filter-burger'  onClick={(e) => toggle(e)}></div>
-        <div className='filter-button'  onClick={(e) => toggle(e)}>Filter</div>
+      <div className={`filter-bar ${didReach ? "is-fixed" : ""}`} ref={filterComponent} onScroll={(e) => handleScroll(e)}>
+        <div className='filter-burger' onClick={(e) => toggle(e)}></div>
+        <div className='filter-button' onClick={(e) => toggle(e)}>Filter</div>
         <ul className='filter-types'>
-          <li>All</li>
-          <li>Phones and Gadgets</li>
-          <li>Computers</li>
-          <li>Audio</li>
-          <li>Television</li>
-          <li>Cameras</li>
+          <li onClick={(e)=>handleFilter(e)}>All</li>
+          <li onClick={(e)=>handleFilter(e)}>Phones and Gadgets</li>
+          <li onClick={(e)=>handleFilter(e)}>Computers</li>
+          <li onClick={(e)=>handleFilter(e)}>Audio</li>
+          <li onClick={(e)=>handleFilter(e)}>Television</li>
+          <li onClick={(e)=>handleFilter(e)}>Cameras</li>
         </ul>
       </div>
-      <div className={`filter ${isActive ? "is-active" : ""} ${didReach ? "is-fixed":""}`}>
+      <div className={`filter ${isActive ? "is-active" : ""} ${didReach ? "is-fixed" : ""}`}>
         <form>
           <div className="filter-block">
             <h4>Check boxes</h4>
@@ -65,19 +96,20 @@ const Search = () => {
           </div>
         </form>
       </div>
-      <div className={`filter-kanban ${isActive ?  "is-shrinked": ""}`}>
+      <div className={`filter-kanban ${isActive ? "is-shrinked" : ""}`}>
         <ul className='filter-kanban-container'>
-          {productdata?.map((item, key)=>{
+          {Array.isArray(filteredProducts) ? filteredProducts?.map((item, key) => {
             return (
-            <li className="card" key={key}>
-              <img src="#" alt={item.name} /><br/>
-              {item.name}<br/>
-              {item.categories}<br />
-              {item.price}
-            </li>
-          )})}
+              <li className="card" key={key}>
+                <img src="#" alt={item.name} /><br />
+                Name: {item.name}<br />
+                Categories: {item.categories}<br />
+                Price: {item.price}$
+              </li>
+            )
+          }): ""}
         </ul>
-        <div className="kanban-fail-message">No results found</div>
+        <div ref={failMessage} className="kanban-fail-message">No results found</div>
       </div>
     </div>
   );

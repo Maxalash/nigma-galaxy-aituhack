@@ -95,6 +95,11 @@ ul{
   width: 100%;
 }
 
+.kanban-fail-message{
+  display: none;
+  text-align: center;
+}
+
 
 /* Cards */
 
