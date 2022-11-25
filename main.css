@@ -1,0 +1,405 @@
+*, *::after, *::before{
+  box-sizing: border-box;
+}
+/* Main sections of the page */
+
+
+.main {
+  background-color: aquamarine;
+  width: 95vw;
+  height: 100vh;
+  
+}
+
+
+.secname{
+  text-align: center;
+}
+
+/* Header section */
+
+/* Sections in the "main" section */
+
+.about {
+  width: 100%;
+  padding: 50px;
+}
+
+.projects {
+  width: 100%;
+  padding:0 50px ;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.projects2{
+  width: 80%;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  padding:50px;
+  background-color: rgb(174, 249, 227);
+  border-radius: 30px;
+}
+
+.skills {
+  display: none;
+}
+
+
+/* About section */
+
+.about h1{
+  font-size: 6rem;
+}
+.about div{
+  font-size: 1.5rem;
+  background-color: rgb(174, 249, 227);
+  width: 50%;
+  padding: 20px;
+  border-radius: 20px;
+  line-height: 2.5rem;
+}
+
+/* Cards */
+
+/* Projects */
+
+
+.proj a{
+text-decoration: none;
+outline: none;
+font-weight: 600;
+font-size: 1.8rem;
+color: black;
+}
+
+/* Footer */
+
+
+
+/* Animations */
+
+
+/* Adaptive layout */
+@media screen and (min-width:580px) and (max-width: 900px) {
+/* 
+  .about h1{
+    font-size: 3rem;
+  }
+
+  .about div{
+    font-size: 1rem;
+    width: 60%;
+    line-height: 1.5rem;
+  }
+
+  .projects{
+    flex-direction: column;
+  }
+
+  .card{
+    left: 50%;
+    width:70vw;
+    padding-top: 35vw;
+    transform: translateX(-50%);
+  }
+
+  .card-img{
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .card *{
+    height: 100%;
+    left: 0;
+  } */
+}
+
+
+@media screen and (max-width: 579px) {
+/* 
+  .about h1{
+    font-size: 2rem;
+  }
+
+  .about div{
+    font-size: 1rem;
+    width: 100%;
+    line-height: 1rem;
+  }
+
+  .projects{
+    flex-direction: column;
+  }
+
+  .card{
+    left: 50%;
+    width:90%;
+    height: 170px;
+    padding:0;
+    transform: translateX(-50%);
+  } */
+
+
+}
+.header {
+  width: 98vw;
+  height: 70px;
+  padding: 30px 80px 30px 60px;
+  animation: headerdown 1s;
+}
+
+
+.logo{
+  width:30%;
+  margin-top: -8px;
+  float: left;
+  font-size: 1.5rem;
+}
+
+.navbar{
+  list-style: none;
+  float: right;
+  margin-top: 0;
+  margin-top: -3px;
+}
+
+.navbar li{
+  float: right;
+  margin-right:20px;
+  margin-top: 0;
+}
+
+.navbar li a{
+  outline: none;
+  text-decoration: none;
+  color: black;
+  font-size: 1.2rem;
+}
+
+/* Animations */
+
+@keyframes headerdown {
+  from{
+    margin-top: -60px;
+  }to{
+    margin-top: 0;
+  }
+}
+
+/* Adaptive layout */
+
+
+@media screen and (min-width:580px) and (max-width: 900px) {
+
+
+}
+
+
+@media screen and (max-width: 579px) {
+
+  .header{
+    width: 90vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    padding: 30px 0 0;
+  }
+  .logo{
+    display: none;
+  }
+
+
+  .navbar{
+    float: none;
+  }
+  .navbar li{
+    float: left;
+    margin-bottom: 7px;
+  }
+
+}
+.footer {
+  width: 98vw;
+  height: 100px;
+  padding: 10px 50px 30px;
+  background-color: rgb(97, 44, 148);
+}
+
+.info{
+  text-align: center;
+}
+
+.footer a{
+  text-decoration: none;
+  outline: none;
+  color: black;
+}
+
+
+/* Adaptive layout */
+
+@media screen and (min-width:580px) and (max-width: 900px) {
+
+}
+
+
+@media screen and (max-width: 579px) {
+
+
+
+}
+.filter-section{
+  background-color: rgb(235, 235, 235);
+}
+/* Styling of Filter toggler */
+
+.filter-bar{
+  background-color: #fff;
+  width: 98vw;
+  z-index: 13;
+  padding: 20px 20px;
+  display: grid;
+  grid-template-columns: 1fr 2fr 85vw;
+}
+
+.filter-bar.is-fixed{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.filter-button{
+  width: 100%;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.filter-types{
+  width:100%;
+  height:100%;
+  text-align:center;
+  margin: 0;
+}
+
+.filter-types li{
+  display: inline;
+  margin-right: 20px;
+  border-bottom: 3px solid rgb(75, 34, 97);
+  cursor: pointer;
+}
+
+
+/* Animated filter panel */
+
+.filter{
+  width: 30vw;
+  max-width: 280px;
+  height: 100vh;
+  background-color: #fff;
+  padding: 20px 20px 10px;
+  margin-top: 30px;
+  box-shadow:5px 0px 20px black;
+  transform: translateX(-100%);
+  transition: transform 0.4s;
+  z-index: 12;
+}
+
+
+.filter.is-active{
+  transform: translateX(-5%);
+}
+
+.filter.is-fixed{
+  position: fixed;
+  top: 0;
+}
+
+ul{
+  list-style: none;
+}
+
+/* Styling Filter kanban container */
+
+.filter-kanban{
+  width: 98vw;
+  min-height: 100vh;
+  top: 0;
+  -webkit-transition: width .3s;
+  margin: 0 0 0 auto;
+  transition: width 0.3s;
+}
+
+.filter-kanban.is-shrinked{
+  width: 75vw;
+}
+
+.filter-kanban-container{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.kanban-fail-message{
+  display: none;
+  text-align: center;
+}
+
+
+/* Cards */
+
+
+.card {
+  background-color: aquamarine;
+  width: 90%;
+  height: 250px;
+  border-radius: 10px;
+  padding: 10px;
+  margin:0 10px 30px;
+  position: relative;
+}
+
+.card a{
+  position: absolute;
+  width: 100%;
+  height: 200px;
+  top: 0;
+  border-radius: 20px;
+  z-index: 10;
+}
+.card-img{
+  background-color: rgb(45, 94, 62);
+  width:100%;
+  height: 170px;
+  margin-bottom: 8px;
+  border-radius: 20px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.card-title {
+  position: absolute;
+  background-color: rgb(45, 94, 62);
+  width: 100%;
+  height: 200px;
+  top: 0;
+  border-radius: 20px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 170px;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: white;
+  opacity: 0.95;
+  display: none;
+}
+
+a:hover ~ .card-title{
+  display: block;
+}
