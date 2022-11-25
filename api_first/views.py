@@ -1,14 +1,14 @@
-from django.shortcuts import render
-
 import requests
 from bs4 import BeautifulSoup
 import json
-
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
 from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
-
+from .serializers import UserRegisterSerializer
 
 def get_page(url: str):
     r = requests.get(url)
@@ -30,12 +30,15 @@ def parse_e_katalog(item="Ноутбуки"):
                                  "&page_=" + str(page_num) + "=&maxPrice_=10000000")
                 if not page2.find_all("td",{"class": 'model-short-info'}):
                     break
-                page_links = page2.find_all("td",{"class": 'model-short-info'})
+                page_links = page2.find_all("td", {"class": 'model-short-info'})
                 image_links = page2.find_all("table", {"class": "model-short-photo"})
+                prices = page2.find_all("td", {"class": "model-hot-prices-td"})
+                print(prices)
                 for page_link2, image_link2 in zip(page_links, image_links):
                     item_description = []
                     if page_link2.find('a').get('href') != '#':
-                        item_name = page_link2.find('a').get('title')
+                        # print(price2)
+                        item_name = page_link2.find('span',{'class': 'u'}).getText()
                         item_link = link + page_link2.find('a').get('href')
                         item_description.append(page_link2.find('div', {'class': 'model-short-description'}).get('data-descr'))
                         if image_link2.find('img').get('src') is None:
@@ -68,3 +71,24 @@ def get_item_list(request):
     item_name = request.data['item']
     return Response(parse_e_katalog(item_name))
 
+class HandleToken(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        if not created:
+            token.delete()
+            token = Token.objects.create(user=user)
+        return Response({'token': token.key})
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))
+def register(request):
+    serializer = UserRegisterSerializer(data=request.data)
+    if serializer.is_valid():
+        user = User.objects.create_user(serializer.validated_data['username'],None,serializer.validated_data['password'])
+        Token.objects.get_or_create(user=user)
+        return Response(status=201)
+    else:
+        return Response(serializer.errors)
