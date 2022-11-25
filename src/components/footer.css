@@ -1,0 +1,30 @@
+.footer {
+  width: 98vw;
+  height: 100px;
+  padding: 10px 50px 30px;
+  background-color: rgb(97, 44, 148);
+}
+
+.info{
+  text-align: center;
+}
+
+.footer a{
+  text-decoration: none;
+  outline: none;
+  color: black;
+}
+
+
+/* Adaptive layout */
+
+@media screen and (min-width:580px) and (max-width: 900px) {
+
+}
+
+
+@media screen and (max-width: 579px) {
+
+
+
+}
