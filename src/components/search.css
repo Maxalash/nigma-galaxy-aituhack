@@ -9,7 +9,7 @@
   z-index: 13;
   padding: 20px 20px;
   display: grid;
-  grid-template-columns: 1fr 2fr 85vw;
+  grid-template-columns: 1fr 2fr 90vw;
 }
 
 .filter-bar.is-fixed{
