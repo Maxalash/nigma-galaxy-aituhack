@@ -2,7 +2,6 @@ import React from 'react';
 import './home.css';
 import { useDispatch, useSelector } from "react-redux";
 import { setCount } from '../reducers/reposReducer';
-import { pdata, ddata } from '../assets/projects';
 import Header from '../components/header.jsx';
 import Footer from '../components/footer.jsx';
 import Search from '../components/search.jsx';
