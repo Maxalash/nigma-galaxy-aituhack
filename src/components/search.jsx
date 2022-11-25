@@ -27,6 +27,9 @@ const Search = () => {
     }
   }
 
+  // Function for filtering by the types of the product
+  // that triggered by clicking types on the filter bar
+
   const handleFilter = (e) => {
     let items = JSON.parse(JSON.stringify(filteredProducts));
     const filterType = e.target.innerHTML;
