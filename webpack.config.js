@@ -50,6 +50,9 @@ const config = {
       // Learn more about loaders from https://webpack.js.org/loaders/
     ],
   },
+  experiments: {
+    topLevelAwait: true
+  },
 };
 
 module.exports = () => {
