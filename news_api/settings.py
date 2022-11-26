@@ -29,6 +29,8 @@ ALLOWED_HOSTS = ['*']
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    'http://localhost:8081',
+    'http://127.0.0.1:8081',
     'http://127.0.0.1:3000',
 
 ]
@@ -47,7 +49,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'api_first',
-
+    'corsheaders',
     'rest_framework.authtoken',
     'django_filters',
 ]
