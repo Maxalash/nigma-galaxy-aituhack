@@ -20,6 +20,12 @@ link = "https://kz.e-katalog.com"
 page = get_page(link)
 
 def parse_e_katalog(item="Ноутбуки"):
+    """
+        Парсинг e-Katalog
+        используя библиотеки requests, beautifulsoup мы парсили сами html-ки, потому что API к ним
+        был в формате html, так же были веб сервисы как shop.kz, megatrade.kz которых использовал
+        e-Katalog
+    """
     item_list = []
     for page_link in page.find_all("a",{"class": "mainmenu-subitem"}):
         category_link = "https://kz.e-katalog.com/ek-list.php?katalog_="
